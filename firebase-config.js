@@ -17,6 +17,7 @@ firebase.initializeApp(firebaseConfig);
 let currentUser = null;
 const database = firebase.database();
 const messagesRef = database.ref('messages');
+let messagesLoaded = false;
 
 // Show username form when page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -34,26 +35,29 @@ function joinChat() {
         currentUser = username;
         document.getElementById('usernameForm').style.display = 'none';
         document.getElementById('chatContainer').style.display = 'block';
-        loadMessages();
         setupMessageListener();
     }
 }
 
-function loadMessages() {
-    const messagesDiv = document.getElementById('messages');
-    messagesDiv.innerHTML = '';
+function setupMessageListener() {
+    // Remove existing event listeners first
+    messagesRef.off();
+    
+    // Load initial messages
     messagesRef.once('value', function(snapshot) {
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML = '';
         snapshot.forEach(function(childSnapshot) {
             displayMessage(childSnapshot.val());
         });
+        messagesLoaded = true;
     });
-}
 
-function setupMessageListener() {
-    // Remove existing event listeners first
-    messagesRef.off('child_added');
+    // Set up listener for new messages
     messagesRef.on('child_added', function(data) {
-        displayMessage(data.val());
+        if (messagesLoaded) {
+            displayMessage(data.val());
+        }
     });
 }
 
@@ -93,6 +97,7 @@ function resetChat() {
         messagesRef.remove();
         const messagesDiv = document.getElementById('messages');
         messagesDiv.innerHTML = '';
+        messagesLoaded = false;
     }
 }
 
