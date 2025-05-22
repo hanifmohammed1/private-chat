@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "pigeon-366d6",
+    "private-chat": "privatechat-317bc"
+  },
+  "targets": {},
+  "etags": {}
+}
