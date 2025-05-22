@@ -102,25 +102,24 @@ function resetChat() {
     }
 }
 
-// Add reset button to HTML
+// Set up event listeners when the page loads
 document.addEventListener('DOMContentLoaded', function() {
-    const chatContainer = document.getElementById('chatContainer');
-    const resetButton = document.createElement('button');
-    resetButton.textContent = 'Reset Chat';
-    resetButton.style.marginTop = '10px';
-    resetButton.onclick = resetChat;
-    chatContainer.insertBefore(resetButton, document.getElementById('messageInput').parentElement);
-});
+    // Set up reset button
+    document.getElementById('resetButton').onclick = resetChat;
 
-// Add event listener for Enter key
-document.getElementById('messageInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        sendMessage();
-    }
-});
+    // Set up message input events
+    document.getElementById('messageInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
 
-// Add click handler for send button
-document.getElementById('sendButton').onclick = sendMessage;
+    // Set up send button
+    document.getElementById('sendButton').onclick = sendMessage;
+
+    // Show username form
+    showUsernameForm();
+});
 
 // Add event listener for Enter key
 document.getElementById('messageInput').addEventListener('keypress', function(e) {
