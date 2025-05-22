@@ -21,23 +21,10 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
     <script>
         // Wait for DOM to load
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Firebase
-            const firebaseConfig = {
-                apiKey: "AIzaSyAzWD-GapOQ5XYvqFZUjoJsWB1yzHxrd1I",
-                authDomain: "privatechat-317bc.firebaseapp.com",
-                projectId: "privatechat-317bc",
-                storageBucket: "privatechat-317bc.firebasestorage.app",
-                messagingSenderId: "742830327113",
-                appId: "1:742830327113:web:84662100302df40dca4698",
-                measurementId: "G-NX49XRRQCZ"
-            };
-
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-
             // Get database reference
             const database = firebase.database();
             const messagesRef = database.ref('messages');
