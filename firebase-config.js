@@ -40,9 +40,9 @@ function joinChat() {
 }
 
 function loadMessages() {
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.innerHTML = '';
     messagesRef.once('value', function(snapshot) {
-        const messagesDiv = document.getElementById('messages');
-        messagesDiv.innerHTML = '';
         snapshot.forEach(function(childSnapshot) {
             displayMessage(childSnapshot.val());
         });
@@ -50,6 +50,8 @@ function loadMessages() {
 }
 
 function setupMessageListener() {
+    // Remove existing event listeners first
+    messagesRef.off('child_added');
     messagesRef.on('child_added', function(data) {
         displayMessage(data.val());
     });
@@ -84,6 +86,35 @@ function sendMessage() {
         document.getElementById('messageInput').value = '';
     }
 }
+
+// Add reset button functionality
+function resetChat() {
+    if (confirm('Are you sure you want to reset the chat? This will delete all messages.')) {
+        messagesRef.remove();
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML = '';
+    }
+}
+
+// Add reset button to HTML
+document.addEventListener('DOMContentLoaded', function() {
+    const chatContainer = document.getElementById('chatContainer');
+    const resetButton = document.createElement('button');
+    resetButton.textContent = 'Reset Chat';
+    resetButton.style.marginTop = '10px';
+    resetButton.onclick = resetChat;
+    chatContainer.insertBefore(resetButton, document.getElementById('messageInput').parentElement);
+});
+
+// Add event listener for Enter key
+document.getElementById('messageInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
+
+// Add click handler for send button
+document.getElementById('sendButton').onclick = sendMessage;
 
 // Add event listener for Enter key
 document.getElementById('messageInput').addEventListener('keypress', function(e) {
