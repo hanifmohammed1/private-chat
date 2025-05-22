@@ -35,6 +35,7 @@ function joinChat() {
         currentUser = username;
         document.getElementById('usernameForm').style.display = 'none';
         document.getElementById('chatContainer').style.display = 'block';
+        document.getElementById('currentUsername').textContent = username;
         setupMessageListener();
     }
 }

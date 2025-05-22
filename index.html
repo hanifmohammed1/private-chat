@@ -26,6 +26,22 @@
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .username-display {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
         #messages { 
             height: 400px; 
             overflow-y: auto; 
@@ -35,6 +51,7 @@
             margin-bottom: 20px;
             background-color: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
         }
         .message {
             margin: 10px 0;
@@ -61,6 +78,12 @@
             font-size: 0.9em;
             color: #65676b;
         }
+        .input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+        }
         #messageInput {
             width: 80%;
             max-width: 300px;
@@ -86,15 +109,12 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
-        #chatContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .reset-button {
+            background: #dc3545;
+            color: white;
         }
-        #messages {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
+        .reset-button:hover {
+            background: #c82333;
         }
     </style>
 </head>
@@ -105,10 +125,14 @@
         <button onclick="joinChat()">Join Chat</button>
     </div>
     <div id="chatContainer" style="display: none;">
-        <div id="messages"></div>
-        <div>
+        <div class="chat-header">
+            <span class="username-display">Username: <span id="currentUsername"></span></span>
+            <button id="resetButton" class="reset-button">Reset Chat</button>
+        </div>
+        <div id="messages" class="messages-container"></div>
+        <div class="input-container">
             <input type="text" id="messageInput" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send</button>
+            <button id="sendButton">Send</button>
         </div>
     </div>
 
