@@ -12,3 +12,16 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+// Set up Realtime Database security rules
+const database = firebase.database();
+// Load existing messages when page loads
+database.ref('messages').once('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+        const message = childSnapshot.val();
+        const messageDiv = document.createElement('div');
+        messageDiv.className = message.sender === 'me' ? 'message sent' : 'message received';
+        messageDiv.textContent = message.text;
+        document.getElementById('messages').appendChild(messageDiv);
+    });
+});

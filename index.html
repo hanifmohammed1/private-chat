@@ -31,6 +31,17 @@
             const messagesDiv = document.getElementById('messages');
             const messageInput = document.getElementById('messageInput');
 
+            // Load existing messages
+            messagesRef.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    const message = childSnapshot.val();
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = message.sender === 'me' ? 'message sent' : 'message received';
+                    messageDiv.textContent = message.text;
+                    messagesDiv.appendChild(messageDiv);
+                });
+            });
+
             // Listen for new messages
             messagesRef.on('child_added', function(data) {
                 const message = data.val();
