@@ -22,56 +22,60 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAzWD-GapOQ5XYvqFZUjoJsWB1yzHxrd1I",
-            authDomain: "privatechat-317bc.firebaseapp.com",
-            projectId: "privatechat-317bc",
-            storageBucket: "privatechat-317bc.firebasestorage.app",
-            messagingSenderId: "742830327113",
-            appId: "1:742830327113:web:84662100302df40dca4698",
-            measurementId: "G-NX49XRRQCZ"
-        };
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Firebase
+            const firebaseConfig = {
+                apiKey: "AIzaSyAzWD-GapOQ5XYvqFZUjoJsWB1yzHxrd1I",
+                authDomain: "privatechat-317bc.firebaseapp.com",
+                projectId: "privatechat-317bc",
+                storageBucket: "privatechat-317bc.firebasestorage.app",
+                messagingSenderId: "742830327113",
+                appId: "1:742830327113:web:84662100302df40dca4698",
+                measurementId: "G-NX49XRRQCZ"
+            };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
 
-        // Get database reference
-        const database = firebase.database();
-        const messagesRef = database.ref('messages');
-        const messagesDiv = document.getElementById('messages');
-        const messageInput = document.getElementById('messageInput');
+            // Get database reference
+            const database = firebase.database();
+            const messagesRef = database.ref('messages');
+            const messagesDiv = document.getElementById('messages');
+            const messageInput = document.getElementById('messageInput');
 
-        // Listen for new messages
-        messagesRef.on('child_added', function(data) {
-            const message = data.val();
-            const messageDiv = document.createElement('div');
-            messageDiv.className = message.sender === 'me' ? 'message sent' : 'message received';
-            messageDiv.textContent = message.text;
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        });
+            // Listen for new messages
+            messagesRef.on('child_added', function(data) {
+                const message = data.val();
+                const messageDiv = document.createElement('div');
+                messageDiv.className = message.sender === 'me' ? 'message sent' : 'message received';
+                messageDiv.textContent = message.text;
+                messagesDiv.appendChild(messageDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            });
 
-        function sendMessage() {
-            const text = messageInput.value;
-            if (text.trim()) {
-                messagesRef.push({
-                    text: text,
-                    sender: 'me',
-                    timestamp: Date.now()
-                });
-                messageInput.value = '';
+            function sendMessage() {
+                const text = messageInput.value;
+                if (text.trim()) {
+                    messagesRef.push({
+                        text: text,
+                        sender: 'me',
+                        timestamp: Date.now()
+                    });
+                    messageInput.value = '';
+                }
             }
-        }
 
-        // Add event listener for Enter key
-        messageInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
+            // Add event listener for Enter key
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Add click handler for send button
+            document.getElementById('sendButton').onclick = sendMessage;
         });
     </script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-database-compat.js"></script>
-    <script src="app.js"></script>
 </body>
 </html>
